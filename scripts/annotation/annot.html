@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Reference Annotation</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="reference-annotation">Reference Annotation</h1>
+<p>Making sure the genome is masked well is important for annotation as breaker can otherwise make mistakes, Aleix already did that.
+Using isoseq data requires reads to be mapped already, need to start with that.</p>
+<h3 id="isoseq-mapping">Isoseq mapping</h3>
+<p>Mapping the isoseq data for all 8 samples using</p>
+<pre><code>minimap2 -t20 -ax splice:hq -uf $REF hq_transcripts-${i}.fasta &gt; /${i}.sam
+samtools view -bS --threads 20 ${i}.sam -o ${i}.bam
+</code></pre>
+<p><code>minimap2 v2.26-e1175</code></p>
+<p><code>samtools v1.20</code></p>
+<p>I'm mapping against all scaffolds. The table shows how many reads (+ proportions) map on scaffolds and chromosomes.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Sample</th>
+<th style="text-align:left">Mapped_to_scaff</th>
+<th style="text-align:left">Mapped_to_chr</th>
+<th style="text-align:left">Total_mapped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">I1</td>
+<td style="text-align:left">67182 (3.956%)</td>
+<td style="text-align:left">1629794 (95.961%)</td>
+<td style="text-align:left">1698384</td>
+</tr>
+<tr>
+<td style="text-align:left">I2</td>
+<td style="text-align:left">70446 (4.365%)</td>
+<td style="text-align:left">1542312 (95.566%)</td>
+<td style="text-align:left">1613873</td>
+</tr>
+<tr>
+<td style="text-align:left">I3</td>
+<td style="text-align:left">78291 (3.502%)</td>
+<td style="text-align:left">2155589 (96.421%)</td>
+<td style="text-align:left">2235605</td>
+</tr>
+<tr>
+<td style="text-align:left">I4</td>
+<td style="text-align:left">88363 (4.577%)</td>
+<td style="text-align:left">1838819 (95.248%)</td>
+<td style="text-align:left">1930559</td>
+</tr>
+<tr>
+<td style="text-align:left">I5M</td>
+<td style="text-align:left">71883 (4.801%)</td>
+<td style="text-align:left">1421449 (94.944%)</td>
+<td style="text-align:left">1497138</td>
+</tr>
+<tr>
+<td style="text-align:left">I5F</td>
+<td style="text-align:left">84277 (4.904%)</td>
+<td style="text-align:left">1623776 (94.489%)</td>
+<td style="text-align:left">1718479</td>
+</tr>
+<tr>
+<td style="text-align:left">FAD</td>
+<td style="text-align:left">60995 (6.494%)</td>
+<td style="text-align:left">877361 (93.405%)</td>
+<td style="text-align:left">939304</td>
+</tr>
+<tr>
+<td style="text-align:left">MAD</td>
+<td style="text-align:left">55279 (5.166%)</td>
+<td style="text-align:left">1014464 (94.797%)</td>
+<td style="text-align:left">1070147</td>
+</tr>
+</tbody>
+</table>
+<p>When I supply more than 1 bam file as input for braker, I need to comma separate them on the <code>--bam</code> flag</p>
+<h4 id="annotation">Annotation</h4>
+<p>Milena's <a href="https://github.com/milena-t/PhD_chapter1/blob/main/bash_scripts/run_braker.sh">script</a> is made for using <code>breaker v3.0.8</code>+<code>augustus v3.5.0-29231223.33fc94d</code> on Uppmax (Rackham).</p>
+<p>I need to make some <a href="https://github.com/Gaius-Augustus/BRAKER?tab=readme-ov-file#braker-with-long-read-rna-seq-only-and-protein-data">adjustments</a> to use <code>Braker</code> with long read isoseq data. Specifically it uses a distinct container and reads need to be mapped already.</p>
+<h3 id="gene-body-coverage">Gene body coverage</h3>
+<p>Checking gene body coverage in order to test for 3' bias. If there are degraded transcripts you miss the 5' end, more frequent reads towards the 3' end (if the sequencing protocol includes polyA capture).</p>
+<p>Had to generate a bed file using <code>AGAT v1.3.2</code> <code>agat_convert_sp_gff2bed.pl -gff braker.gff -o braker.bed</code> (gff done for annotation QC)</p>
+<p>To get the report I used <a href="https://rseqc.sourceforge.net/">RSeQC</a>'s <code>geneBody_coverage.py</code> (<code>rseqc v 2.6.4</code>)</p>
+<img src="file:////home/ingomue/1.Work/1.Projects/2025_Aquarius/04.geneBody_cov/geneBodyCoverage.curves_gg.png" width="1200" height="675">
+<img src="file:////home/ingomue/1.Work/1.Projects/2025_Aquarius/04.geneBody_cov/geneBodyCoverage.heatMap_gg.png" width="675" height="675">
+<h3 id="annotation-qc">Annotation QC</h3>
+<p>First, I will run <code>BUSCO v5.7.1</code>, then two of Milena's scripts:</p>
+<p>I) <a href="https://github.com/milena-t/PhD_chapter1/blob/main/bash_scripts/calculate_single_exon_stats.sh"><code>calculate_single_exon_stats</code></a> which shows how many single exon genes are annotated (a certain number is expected, but if it's very high this can be suspicious). For this script, I needed to convert the braker.gtf output to gff, I used <a href="https://github.com/NBISweden/AGAT"><code>AGAT v1.3.2</code></a> <code>agat_convert_sp_gxf2gxf.pl -g braker.gtf -o braker.gff</code></p>
+<p>II) <a href="https://github.com/milena-t/PhD_chapter1/blob/main/bash_scripts/annotation_statistics.sh"><code>annotation_statistics</code></a> which uses <code>AGAT</code> to give a nice summary overview</p>
+<h4 id="busco">BUSCO</h4>
+<p>These are the results from my <code>BUSCO</code> analysis:</p>
+<pre><code>--------------------------------------------------
+|Results from dataset                              |
+---------------------------------------------------
+|C:94.2%[S:64.4%,D:29.8%],F:1.2%,M:4.6%,n:2510     |
+|2363    Complete BUSCOs (C)                       |
+|1616    Complete and single-copy BUSCOs (S)       |
+|747    Complete and duplicated BUSCOs (D)         |
+|29    Fragmented BUSCOs (F)                       |
+|118    Missing BUSCOs (M)                         |
+|2510    Total BUSCO groups searched               |
+--------------------------------------------------
+</code></pre>
+<p>For comparison these are the statistics of the WGA, overall rather similar, but the duplication rate is much higher in the isoseq data. &quot;Transcriptomes and protein sets that are not filtered for isoforms will lead to a high proportion of duplicates.&quot; <a href="https://busco.ezlab.org/busco_userguide.html#interpreting-the-results">(BUSCO documentation)</a></p>
+<pre><code>--------------------------------------------------
+|Results from dataset                             |
+--------------------------------------------------
+|C:94.6%[S:93.4%,D:1.2%],F:2.0%,M:3.4%,n:2510     |
+|2376   Complete BUSCOs (C)                       |
+|2345   Complete and single-copy BUSCOs (S)       |
+|31     Complete and duplicated BUSCOs (D)        |
+|51     Fragmented BUSCOs (F)                     |
+|83     Missing BUSCOs (M)                        |
+|2510   Total BUSCO groups searched               |
+--------------------------------------------------
+</code></pre>
+<h4 id="single-exons">Single-exons</h4>
+<p>Here's the output from Milena's single-exon script (excluding transcript IDs):</p>
+<pre><code>    gene features: 14695
+    mRNA features: 559 (0 'transcript' features)
+    transcript features: 20827 (0 mRNA features)
+    exon features: 162352
+    total number of features: 543962
+total number of transcripts: 21386
+total number of top-level features (genes): 14695
+
+4822 single-exon transcripts with average length: 2007.61
+16564 multi-exon transcripts with average length: 40154.2
+</code></pre>
+<h4 id="agat-stats">AGAT stats</h4>
+<p>The overview of <code>AGAT</code> results as produced by Milena's script (modified to as I don't need to loop and don't have filtered data)</p>
+<pre><code>Number of gene               558
+Number of transcript         20827
+mean exons per transcript    7.8
+mean transcript length (bp)  30835
+mean exon length (bp)        203
+Number gene overlapping      0
+Number of single exon gene   558
+</code></pre>
+<p>More detailed results are saved under <code>/proj/snic2019-35-58/water_strider/ingo/data/intermediate/nobackup/02.annotation/01.QC/03.AGAT_stats/agat_stats.txt</code></p>
+<h1 id="functional-annotation">Functional annotation</h1>
+<p>I will try I) <code>InterProScan</code> and II) <code>BLAST+</code> as presented in <a href="https://nbisweden.github.io/workshop-genome_annotation/labs/functional_annotation.html">this tutorial</a> by NBIS.
+On top of that, I will also run III) <a href="https://github.com/eggnogdb/eggnog-mapper"><code>eggnog-mapper</code></a></p>
+<p>I had to remove stop codons from the braker output as some tools (<code>InterProScan</code>) have an issue with the asterisk. <code>sed -e 's/*//g' braker.aa &gt; braker_nostop.faa</code></p>
+<h2 id="i-interproscan-v562-940">I) InterProScan <code>v5.62-94.0</code></h2>
+<p>I ran this with similar settings as shown in the NBIS tutorial, but I skipped the <code>-appl</code> flag to expand the search to all supported databases (<code>CDD,Coils,FunFam,Gene3D,Hamap,MobiDBLite,NCBIfam,PANTHER,Pfam,Phobius,PIRSF,PRINTS,ProSitePatterns,ProSiteProfiles,SFLD,SignalP_EUK,SignalP_GRAM_NEGATIVE,SignalP_GRAM_POSITIVE,SMART,SUPERFAMILY,TMHMM</code>).</p>
+<p>It ran relatively fast for ~15h resulting in <strong>353 923</strong> hits.</p>
+<h2 id="ii-blast-v2160">II) BLAST+ <code>v2.16.0+</code></h2>
+<p>I ran <code>blastp</code> twice, once against Arthropods (taxid: 6656) and a second time limiting the search to Hemiptera (taxid: 7524).
+I use the <code>uniprot</code> database, limit the output to max 10 target sequences per query (limiting to one hit may not necessarily give only the <a href="https://academic.oup.com/bioinformatics/article/35/15/2699/5259186">best hit</a>), I chose a comparably &quot;relaxed&quot; e-value of 1e-3, I want to be a bit more broad with these settings as blast is already more precise than other tools and I can always filter hits afterwards if needed.</p>
+<p><code>BLAST</code> is of course much slower, even when running on 16 threads.</p>
+<p>Had to build my own database, Uppmax doesn't store the fasta file for uniprot</p>
+<p><code>makeblastdb -in uniprot_sprot.fasta -dbtype prot -title &quot;Test&quot;</code></p>
+<pre><code>Building a new DB, current time: 12/10/2025 17:12:43
+New DB name:   /crex/proj/snic2019-35-58/water_strider/ingo/data/raw_external/01.prot/uniprot_sprot.fasta
+New DB title:  Test
+Sequence type: Protein
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 573661 sequences in 7.47997 seconds.
+</code></pre>
+<h2 id="iii-eggnog-mapper-219-eggnog-db-v-502">III) Eggnog-mapper <code>2.1.9</code> (eggNOG DB v <code>5.0.2</code>)</h2>
+<p>Next, I also ran eggnog-mapper with three different settings, a) using <a href="https://github.com/soedinglab/MMseqs2"><code>mmseqs2</code></a> <code>v12-113e3</code> with default sensitivity settings, b) <code>mmseqs2</code> with high sensitivity settings and c) using <a href="https://github.com/bbuchfink/diamond"><code>Diamond</code></a> <code>v2.0.11</code></p>
+<p>Opinions on which tools is better are torn so I wanted to try both. mmseqs2 is recommended over diamond when dealing with full genomes/scaffolds which isn't an issue for my input. Each creator argues - as usual - that their tool outperforms the other.</p>
+<p>For the first <code>mmseqs2</code> run, I use default settings, 3 iterations, starting at sensitivity <code>s=3</code> and ending with <code>s=7</code> (2nd iteration at <code>s=5</code>), I took the maximum value from their most recent <a href="https://www.nature.com/articles/s41592-025-02819-8">paper</a> which claims to be more accurate than <code>Diamond</code>. I limit the search to only Arthropods (taxid: 6656).</p>
+<p>The second <code>mmseqs2</code> run was more sensitive, again going through 3 iterations, but starting at <code>s=3.5</code> and ending at <code>s=8.5</code> (2nd iteration at <code>s=6</code>) and again limiting the search to Arthropods.</p>
+<p>For <code>Diamond</code>, I use multiple iterations with increasing sensitivity in order to kepp it consistent with <code>mmseqs2</code>'s approach. I chose the highest setting for final sensitivity (<code>ultra-sensitive</code>) as the <a href="https://www.nature.com/articles/s41592-021-01101-x">authors claim</a> that it then becomes more accurate than <code>mmseqs2</code> at high sensitivity (<code>s=7.5</code>). I am using BLOSUM62 as substitution matrix as this is also <code>mmseqs2</code>'s default. I also limited the search to Arthropods here.</p>
+<p>Eggnog runs much faster than the other two tools, on default settings it took <code>mm2seqs2</code> ~43 mins, on high-sensitivity ~52 mins and using <code>Diamond</code> ~53 mins.</p>
+<p>The results summarised:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Approach</th>
+<th style="text-align:center">N_hits</th>
+<th style="text-align:center">N_annotations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">mmseqs2 def</td>
+<td style="text-align:center">18 621</td>
+<td style="text-align:center">15 936</td>
+</tr>
+<tr>
+<td style="text-align:left">mmseqs2 HS</td>
+<td style="text-align:center">18 640</td>
+<td style="text-align:center">15 942</td>
+</tr>
+<tr>
+<td style="text-align:left">Diamond</td>
+<td style="text-align:center">143 596</td>
+<td style="text-align:center">16 200</td>
+</tr>
+</tbody>
+</table>
+<p>Diamond picked up slightly more unique features and genes, but some were also unique to mmseqs2 (see <code>eval_annot_methods.html</code> for comparisons). I decided to merge both diamond and mmseqs2 (high sensitivity) outputs.</p>
+<h2 id="filtering">Filtering:</h2>
+<p>Some publications that I screened used minimum ORF size, premature stop codons, incomplete start/stop codons and gene length.</p>
+<h3 id="1-minimum-orf-size-agat_sp_filter_by_orf_size">1) Minimum ORF size <code>agat_sp_filter_by_ORF_size</code></h3>
+<p>I'll try the default of &gt; 100 aa as well as &gt; 50 aa first. Afterwards, I also added &gt; 30 aa.</p>
+<p>50 aa cutoff removes 627 transcripts (3.011% of all transcripts), 65 genes and 68 genes have at least one transcript removed (0.445% and 0.466% of all genes respectively).
+100 aa cutoff removes 1614 transcripts (7.75%), 915 (6.265%) genes and 1010 (6.915%) genes with at least one removed transcript.
+I also tried 30 aa which removed 605 transcripts (2.905%), 46 genes (0.315%) and 46 genes that had at least one transcript removed.
+Among the publications I came across, people used 30 - 50 aa as cutoff, so I would stick with the 50 aa threshold.
+Even at 50 aa, all excluded genes are unnamed (identified mostly by GeneMark, some by gmst)</p>
+<h3 id="2-distance-between-loci-agat_sp_filter_by_locus_distance">2) Distance between loci <code>agat_sp_filter_by_locus_distance</code></h3>
+<p>I'm not sure how important this filter, as I understand this is more important for training specific tools that require &quot;clean&quot; intergenic regions. The main issue are just overlapping genes. No default given, this <a href="https://www.biostars.org/p/394385/">tutorial</a> by the AGAT creator uses 500 bp.
+It's also possible to run this command without filtering and just adding a <code>low_dist</code> flag including the actual distance. First I will just see how many features I lose.</p>
+<p>Using 500 bp, the filter throws out 2623 loci (17.972%) this seems quite harsh and since I saw that no genes are overlapping, I would skip this filter.</p>
+<h3 id="3-gene-length-agat_sp_filter_gene_by_length">3) Gene length <code>agat_sp_filter_gene_by_length</code></h3>
+<p>I've only come across people using a minimum filter, not maximum.</p>
+<p>I'll filter by maximum size using the 95% (&lt; 34140) and 90% (&lt;= 22029) quantile. I obtained the quantiles through R <code>quantiles</code> using a type 1 distribution (discontinuous, inverse of empirical distribution function) as this seems to overlap with AGAT's calculation. Lengths for the actual filtering are determined by concatenating all exons of a gene together, so the quantiles themselves are not fully accurate. Wouldn't this also then only make sense after removing isoforms?
+I'll also try to filter by minimum length using the same setting as minimum ORF size to see how much these filters overlap (using 150 [50*3] and 300 [100*3 bp]).</p>
+<p>The minimum filter worked fine and removed 62 (0.425%) or 866 (5.934%) of genes when using 150 bp or 300 bp as cutoffs, respectively. I also tried &gt;= 50 bp which I came across in two references, this removes just 23 genes (0.157%).
+No genes are exclusive to this filter compared to the ORF filter, just using the ORF is fine then.</p>
+<h3 id="4-incomplete-cds-start-andor-stop-codon-missing-agat_sp_filter_incomplete_gene_coding_models">4) Incomplete cds (start and/or stop codon missing) <code>agat_sp_filter_incomplete_gene_coding_models</code></h3>
+<p>I have some start and stop codons that are shorter than 3 bp (0.389% and 0.101% respectively), I'm not sure if this filter can remove these.
+This one can also be run as a flag rather than a filter.</p>
+<p>Two genes (rest-a [transcriptional repressor of neural genes in non-neural cells] and Grik2 [synaptic plasticity, learning, and memory]) were missing a start codon.</p>
+<h3 id="5-merge-overlapping-genes-into-a-single-one-agat_sp_fix_overlaping_genes">5) Merge overlapping genes into a single one <code>agat_sp_fix_overlaping_genes</code></h3>
+<p>Turns overlapping genes into isoforms.</p>
+<p>No overlapping genes were detected.</p>
+<h3 id="6-add-pseudo-to-genes-with-premature-stop-codons-agat_sp_flag_premature_stop_codons">6) Add &quot;pseudo&quot; to genes with premature stop codons <code>agat_sp_flag_premature_stop_codons</code></h3>
+<p>This just adds a flag and shouldn't remove anything, still good to know how many features would get flagged.</p>
+<p>No feature had premature stop codons.</p>
+<p><strong>In the end, for final filtering, I only implemented a filter for minimum ORF size (&gt;= 50 aa) and throwing out incomplete CDS</strong></p>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
