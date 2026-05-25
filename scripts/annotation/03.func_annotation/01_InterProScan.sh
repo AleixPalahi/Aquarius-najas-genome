@@ -8,6 +8,9 @@
 #SBATCH -o 20YYMMDD_interproscan.log
 #SBATCH --mail-type=END
 
+# Remove stop codons (denoted with *) from braker output before running:
+# sed -e 's/*//g' braker.aa > braker_nostop.faa
+
 # Load modules
 module load bioinfo-tools InterProScan/5.62-94.0
 
