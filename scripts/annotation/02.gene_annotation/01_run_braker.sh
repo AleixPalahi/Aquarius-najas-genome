@@ -1,17 +1,17 @@
 #!/bin/bash -l
 
+# Original script by Milena Trabert https://github.com/milena-t/PhD_chapter2/blob/1e0f90222a33ccc312739e7f49b728d737f79602/bash/run_braker.sh#L4
 # example run
-# sbatch --job-name="A_najas" --output="A_najas_braker.out" 01_run_braker.sh A_najas /proj/snic2019-35-58/water_strider/ingo/data/raw_internal/01.ref/Anajas_masked_genome.fa /proj/snic2019-35-58/water_strider/ingo/data/raw_external/01.prot/Arthropoda.fa
+# sbatch --job-name="A_najas" --output="A_najas_braker.out" 01_run_braker.sh A_najas path/to/masked_genome.fa /path/to/Arthropoda.fa
 
 
-#SBATCH -A uppmax2025-2-17
+#SBATCH -A uppmax20XX-X-XX
 #SBATCH -p core
 #SBATCH -n 20
 #SBATCH -t 3-00:00:00
 #SBATCH -J braker_%j
 #SBATCH -o braker_%j.log
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user ingo.mueller@ebc.uu.se
 
 module load bioinfo-tools
     # be careful to not have any other braker dependency modules or something loaded when running the container, because they go with different perl versions
@@ -31,10 +31,10 @@ SPECIES=$1
 ASSEMBLY_MASKED=$2 ## full absolute filepath!! otherwise SNIC_TMP gets confused
 PROTEIN_DATA=$3
 #List of isoseq bamfiles and their relative path
-BAMLIST="/proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/inbams/Fad.bam,/proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/inbams/I1.bam,/proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/inbams/I2.bam,/proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/inbams/I3.bam,/proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/inbams/I4.bam,/proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/inbams/I5F.bam,/proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/inbams/I5M.bam,/proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/inbams/Mad.bam"
+BAMLIST="/path/to/bams/Fad.bam,/path/to/bams/I1.bam,/path/to/bams/I2.bam,/path/to/bams/I3.bam,/path/to/bams/I4.bam,/path/to/bams/I5F.bam,/path/to/bams/I5M.bam,/path/to/bams/Mad.bam"
 
 # run the script from this directory. It's species-specific
-# export wd=/proj/naiss2023-6-65/Milena/annotation_pipeline/only_orthodb_annotation/$SPECIES
+# export wd=/path/to/annotation_pipeline/only_orthodb_annotation/$SPECIES
 export home_wd=${PWD}/${SPECIES}
 
 if [ -d ${home_wd} ]; then
@@ -45,7 +45,7 @@ else
 fi
 
 export wd=${SNIC_TMP}/${SPECIES}
-#ASSEMBLY_MASKED=/proj/naiss2023-6-65/Milena/coleoptera_sequences/c_chinensis/chinensis_from_uppmax.fasta.masked
+#ASSEMBLY_MASKED=/path/to/genome.fasta.masked
 
 if [ -d ${wd} ]; then
     echo "Working directory in temporary directory already exists: ${wd}"
@@ -59,7 +59,7 @@ cd $wd
 
 
 # link braker.sif file (I have it in the same directory, also I use the lr container)
-ln -s /proj/snic2019-35-58/water_strider/ingo/code/01.bash/02.annotation/braker3_lr.sif braker3_lr.sif
+ln -s /path/to/braker3_lr.sif braker3_lr.sif
 
 # check if the augustus_config direcotry exists,
 export AUGUSTUS_CONFIG_PATH=${wd}/augustus_config
@@ -74,7 +74,7 @@ else
     echo "augustus config path in the function: ${AUGUSTUS_CONFIG_PATH}"
 fi
 
-# export PROTEIN_REF_ALL_SPECIES=/proj/naiss2023-6-65/Milena/annotation_pipeline/all_proteinrefs_annotation/orthoDB_and_species_proteins.fa
+# export PROTEIN_REF_ALL_SPECIES=/path/to/orthoDB_and_species_proteins.fa
 
 export ETP=/sw/bioinfo/GeneMark-ETP/1.02-20231213-dd8b37b/rackham/bin
 # the braker example for using the container references this variable in the GENEMARK_PATH flag,
