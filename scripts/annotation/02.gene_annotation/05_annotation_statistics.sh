@@ -1,16 +1,17 @@
 #!/bin/bash
-#SBATCH -A uppmax2025-2-17
+#SBATCH -A uppmax20XX-X-XX
 #SBATCH -p core
 #SBATCH -n 1
 #SBATCH -t 1:30:00
 #SBATCH -J agat_stats
-#SBATCH -o 20251117_AGAT_stats.log
+#SBATCH -o 20YYMMDD_AGAT_stats.log
 
+# Original script by Milena Trabert https://github.com/milena-t/PhD_chapter1/blob/a4d374ca7238768e202e737ef272230729b6efad/bash_scripts/annotation_statistics.sh#L4
 
 module load bioinfo-tools AGAT/1.3.2
 
-GTF=/proj/snic2019-35-58/water_strider/ingo/data/intermediate/nobackup/02.annotation/A_najas/braker/braker.gtf
-OUTDIR=/proj/snic2019-35-58/water_strider/ingo/data/intermediate/nobackup/02.annotation/01.QC/03.AGAT_stats
+GTF=/path/to/braker.gtf
+OUTDIR=/path/to/AGAT_stats
 
 echo "############"
 echo $GTF
