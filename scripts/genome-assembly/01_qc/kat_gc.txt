@@ -1,0 +1,7 @@
+KMER=27
+
+# Load modules
+module load bioinfo-tools
+module load KAT/2.4.2
+
+kat gcp -t 10 -m $KMER -o Anajas_gc_k_$KMER /proj/snic2019-35-58/water_strider/Anajas_hifi/delivery/files/pr_011/ccsreads/pr_011_001/pr_011_001.ccsreads.fastq
