@@ -14,6 +14,6 @@
 
 GFF=/path/to/braker.gff
 IP_FILE=/path/to/braker_nostop.faa.tsv
-OUTDIR=/path/to/01.interpro/01.output
+OUTDIR=/path/to/functional/01.interpro/
 
 agat_sp_manage_functional_annotation.pl -f $GFF -i $IP_FILE -o ${OUTDIR}/braker_interpro
