@@ -1,0 +1,39 @@
+{
+	"full-splice_match":[
+		{
+			"FL": 3
+		}
+	],
+	"incomplete-splice_match":[
+		{
+			"subcategory": ["3prime_fragment", "5prime_fragment", "intron_retention"],
+			"FL": 7
+		}
+	],
+	"novel_in_catalog":[
+		{
+			"all_canonical": "canonical",
+			"FL": 7
+		},
+		{
+			"FL": 14
+		}
+	],
+	"novel_not_in_catalog":[
+		{
+			"all_canonical": "canonical",
+			"FL": 7
+		},
+		{
+			"FL": 14
+		}
+	],
+	"rest": [
+		{
+			"RTS_stage":"FALSE",
+			"all_canonical":"canonical",
+			"coding": "coding",
+			"FL": 7
+		}
+	]
+}
