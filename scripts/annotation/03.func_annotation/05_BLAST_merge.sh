@@ -14,7 +14,7 @@
 # mamba activate agat
 
 GFF=/path/to/braker_interpro/braker.gff
-BLAST_DIR=/path/to/BLAST_out
+BLAST_DIR=/path/to/functional/02.BLAST
 DB_FA=/path/to/uniprot_sprot.fasta
 
 agat_sp_manage_functional_annotation.pl -f $GFF -b ${BLAST_DIR}/Sprot_blast.out -db $DB_FA -o ${BLAST_DIR}/braker_interpro_blast
