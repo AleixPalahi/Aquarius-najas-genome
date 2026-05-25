@@ -1,16 +1,16 @@
 #!/bin/bash
-#SBATCH -A uppmax2025-2-17
+#SBATCH -A uppmax20XX-X-XX
 #SBATCH -p pelle
 #SBATCH -c 1
 #SBATCH -t 00:30:00
 #SBATCH -J GL_min
-#SBATCH -o 20260115_gene_length_min.log
+#SBATCH -o 20YYMMDD_gene_length_min.log
 #SBATCH --mail-type=END
 
 mamba activate agat
 
-GFF=/proj/snic2019-35-58/water_strider/ingo/data/intermediate/nobackup/02.annotation/03.functional/04.merged_annotations/04_interpro_blast_diamond_mmseqsHS_FINAL_MERGED/interpro_blast_diamond_mmseqs.gff
-OUTDIR=/proj/snic2019-35-58/water_strider/ingo/data/intermediate/nobackup/02.annotation/03.functional/06.filtered/03.gene_length
+GFF=/path/to/interpro_blast_diamond_mmseqs.gff
+OUTDIR=/path/to/03.gene_length
 
 agat_sp_filter_gene_by_length.pl -f $GFF -s 50 -t ">=" -o ${OUTDIR}/A_najas_gl_min50.gff
 
