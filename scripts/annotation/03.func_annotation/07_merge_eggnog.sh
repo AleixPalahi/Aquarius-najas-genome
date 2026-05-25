@@ -1,10 +1,10 @@
 #!/bin/bash -l
-#SBATCH -A uppmax2025-2-17
+#SBATCH -A uppmax20XX-X-XX
 #SBATCH -p pelle
 #SBATCH -n 4
 #SBATCH -t 06:00:00
 #SBATCH -J merge_eggnog
-#SBATCH -o 20251215_merge_eggnog.log
+#SBATCH -o 20YYMMDD_merge_eggnog.log
 #SBATCH --mail-type=END
 
 ### Merge eggnog gff with braker output,
