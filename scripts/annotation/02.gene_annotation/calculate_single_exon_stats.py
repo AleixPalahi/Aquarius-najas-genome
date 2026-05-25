@@ -1,3 +1,4 @@
+### Original script by Milena Trabert https://github.com/milena-t/PhD_chapter1/blob/a4d374ca7238768e202e737ef272230729b6efad/src/calculate_single_exon_stats.py#L4
 ### calculate gff statistics focused on single- and multi-exon genes
 ## write the results to stdout
 """
