@@ -3,8 +3,8 @@
 #SBATCH -p pelle
 #SBATCH -c 1
 #SBATCH -t 00:30:00
-#SBATCH -J GL_min
-#SBATCH -o 20YYMMDD_gene_length_min.log
+#SBATCH -J GL
+#SBATCH -o 20YYMMDD_gene_length.log
 #SBATCH --mail-type=END
 
 mamba activate agat
