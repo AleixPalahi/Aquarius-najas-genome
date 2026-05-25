@@ -13,6 +13,6 @@
 mamba activate agat
 
 GFF=/path/to/braker_interpro_blast/braker.gff
-WDIR=/path/to/final_annotation
+WDIR=/path/to/functional/04.final_annotation
 
 agat_sp_manage_functional_annotation.pl -f $GFF --ID A_najas -o ${WDIR}/braker_interpro_blast_ID
