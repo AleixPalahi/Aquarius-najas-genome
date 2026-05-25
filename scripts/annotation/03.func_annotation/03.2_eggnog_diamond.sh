@@ -15,7 +15,7 @@
 module load bioinfo-tools eggNOG-mapper/2.1.9 eggNOG_data/5.0.0
 
 InFAA=/path/to/braker_nostop.faa
-OutDIR=/path/to/diamond
+OutDIR=/path/to/functional/03.eggnog/02.diamond
 GFF=/path/to/braker.gff
 
 #Use/Make scratch dir
