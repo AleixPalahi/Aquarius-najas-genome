@@ -15,6 +15,6 @@
 module load bioinfo-tools InterProScan/5.62-94.0
 
 InFAA=/path/to/braker_nostop.faa
-OutDIR=/path/to/functional/01.interpro/01.output/
+OutDIR=/path/to/functional/01.interpro/
 
 interproscan.sh -i $InFAA -cpu 8 -t p -dp -pa --goterms --iprlookup -d $OutDIR
